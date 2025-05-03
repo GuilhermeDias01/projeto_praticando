@@ -27,10 +27,12 @@ echo "Corrigindo pacotes quebrados..."
 sudo apt-get install -f -y
 
 echo "Verificando pacotes 'held'..."
-held_packages=$(dpkg --get-selections | grep hold)
+held_packages=$(dpkg --get-selections | grep hold || true)
 if [[ -n "$held_packages" ]]; then
 	echo "Encontrado pacotes 'held'. Removendo o hold..."
-	sudo apt-mark unhold $(echo "$held_packages" | awk '{print $1}')
+	echo "$held_packages" | awk '{print $1}' | xargs sudo apt-mark unhold
+else
+	echo "Nenhum pacote 'held' econtrado."	
 fi
 
 echo "Instalando Docker..."
