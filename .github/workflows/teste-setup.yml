@@ -10,12 +10,12 @@ jobs:
   test-setup:
     runs-on: ubuntu-latest
 
-steps:
-  - name: Checkout Repositório
-    uses: actions/checkout@v3
+    steps:
+      - name: Checkout Repositório
+        uses: actions/checkout@v3
 
-  - name: Permissão do script
-    run: chmod +x instlador_de_ferramentas.sh
+      - name: Permissão do script
+        run: chmod +x instlador_de_ferramentas.sh
 
-  - name: Executar script de instalação
-    run: ./instlador_de_ferramentas.sh
+      - name: Executar script de instalação
+        run: ./instlador_de_ferramentas.sh
