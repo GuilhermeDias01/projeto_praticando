@@ -17,8 +17,29 @@ export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
 nvm install --lts
 
+echo "Verificando instalação do Docker..."
+if dpkg -l | grep -q containerd; then
+	echo "Pacote 'containerd' encontrado. Removendo para evitar conflitos..."
+	sudo apt-get remove --purge -y containerd
+fi
+
+echo "Corrigindo pacotes quebrados..."
+sudo apt-get install -f -y
+
+echo "Verificando pacotes 'held'..."
+held_packages=$(dpkg --get-selections | grep hold)
+if [[ -n "$held_packages" ]]; then
+	echo "Encontrado pacotes 'held'. Removendo o hold..."
+	sudo apt-mark unhold $(echo "$held_packages" | awk '{print $1}')
+fi
+
 echo "Instalando Docker..."
 sudo apt install -y docker.io
+
+echo "instalando containerd.io..."
+sudo apt-get install -y containerd.io
+
+echo "Adicionando usuário ao grupo Docker..."
 sudo usermod -aG docker $USER
 
 echo "Configurando aliases e prompt..."
