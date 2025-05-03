@@ -1,0 +1,21 @@
+name: Teste de execução do Script de instalação das ferramentas do ambiente DEV"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  teste-setup:
+    runs-on: ubuntu-latest
+
+steps:
+  - name: Checkout Repositório
+    uses: actions/checkout@v3
+
+  - name: Permissão do script
+    run: chmod +x instlador_de_ferramentas.sh
+
+  - name: Executar script de instalação
+    run: ./instlador_de_ferramentas.sh
