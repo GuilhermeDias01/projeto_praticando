@@ -35,11 +35,9 @@ else
 	echo "Nenhum pacote 'held' econtrado."	
 fi
 
-echo "Instalando Docker..."
-sudo apt install -y docker.io
-
-echo "instalando containerd.io..."
-sudo apt-get install -y containerd.io
+echo "Instalando Docker (método oficial)..."
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
 
 echo "Adicionando usuário ao grupo Docker..."
 sudo usermod -aG docker $USER
